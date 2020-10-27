@@ -156,15 +156,24 @@ export default {
     },
     /* 保存 */
     submitHandler() {
-      console.log('this.$refs.item', this.$refs.item);
-      const res = this.$refs.item.map((item, i) => {
-        return item.dealConditionItems();
+      const params = this.$refs.item.map((item, i) => {
+        const score = item.itemScore;
+        const itemData = item.dealConditionItems();
+        itemData.forEach((row) => {
+          row.lb = this.lb;
+          row.id = this.checkItmeId;
+        });
+        return {
+          lb: this.lb,
+          fs: score,
+          linkId: this.checkItmeId,
+          zkzbDO: itemData,
+        };
       });
-      console.log('res', res);
       if (this.isUpdate) {
-        updateQuality().then();
+        updateQuality(params).then();
       } else {
-        addQuality().then();
+        addQuality(params).then();
       }
     },
   },
