@@ -4,6 +4,7 @@ import OutPutDialog from './components/output-dialog.vue';
 import medicalDialog from './components/medicalDialog.vue';
 import { mapMutations } from "vuex";
 import { GroupNameSelect, ConditionSelect, ConditionDel, ConditionSave, RandomSearch } from '../../api/randomSearch';
+import {getItemList,getQualityList,updateQuality,addQuality} from '@/api/qualityControl'
 export default {
     name: "qualityControl",
     components: { DictInput, PagingToolbar, OutPutDialog, medicalDialog },
@@ -45,12 +46,22 @@ export default {
             },
             dialogTableVisible: false,
             // 输出用到的已处理好的条件组 (在随机查询之后将其设置，用于输出)
-            conditionList: undefined
+            conditionList: undefined,
+        /* ---------质控-------- */
+            checkItmeList: [], //检查项列表
+            checkItmeId:'',
+            lb: 1, //类别
+            qualityList:[], //已有评分规则
         }
     },
-
+    computed: {
+        isUpdate() {
+           return  this.qualityList.length > 0 ? false : true
+        }
+    },
     created() {
         window.addEventListener('resize', this.calcHeight)
+        this.getList()
     },
 
     mounted() {
@@ -62,7 +73,6 @@ export default {
     },
 
     deactivated() {
-        console.log('haha');
         this.dictInputDialog.visible = false
     },
 
@@ -73,9 +83,38 @@ export default {
     methods: {
 
         ...mapMutations("homepage", ["setSearchInfo"]),
+               
+        
+    /* ------质控start--------- */
+        /* 获取检查项目 */
+        getList() {
+            getItemList().then(res => {
+                this.checkItmeList = res.data
+            }, error => {
+                    this.$message.error(`获取检查项目异常${error}`)
+            }) 
+        },
+        /* 查询已有评分项 */
+        queryQaulityItem() {
+            const params = {
+                zktjId:this.checkItmeId,
+                lb:this.lb
+            }
+            getQualityList(params).then(res=>{}, error => {
+                this.$message.error(`获取评分项异常${error}`)
+        }) 
+        },
+        /* 保存 */
+        submitHandler() {
+            if (isUpdate) {
+                updateQuality().then()
+            } else {
+                addQuality().then()
+            }
+        },
+        /* ------质控end--------- */
 
         calcHeight() {
-            console.log('ff',this.$refs.leftBox)
             if (this.$refs.leftBox.$el) {
                 this.rightContentHeight = this.$refs.leftBox.$el.offsetHeight - 53 + 'px';
             }
@@ -117,11 +156,6 @@ export default {
                             fh2: item.fh2 // 右括号
                         }));
                         this.pager = { page: 1, rows: 10, total: 0 };
-                        // this.$nextTick(() => {
-                        //     this.getResultData()
-                        // })
-                        // this.dialogTableVisible = true
-                        // this.$refs.child.showBox();
                     } else this.$message.error(res && res.msg ? res.msg : '获取条件项失败')
                 }).catch(err => {
                     this.$message.error('获取条件项错误')
@@ -277,20 +311,7 @@ export default {
                 this.conditionItems = conditionItems;
             };
             removeItem();
-            /*
-            // 如果当前行的排序字段xh>=0，则需要调接口删除，否则代表前端新增的可直接删除
-            if (this.conditionItems[this.currentIndex].xh >= 0) {
-                ConditionDel({
-                    hmm: this.editGroupId,
-                    xh: this.conditionItems[this.currentIndex].xh
-                }).then(res => {
-                    if (res && res.code === 0) removeItem();
-                    else this.$message.error('删除失败')
-                }).catch(err => {
-                    this.$message.error('删除失败')
-                })
-            } else removeItem()
-            */
+      
         },
 
         // 保存

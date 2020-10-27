@@ -18,7 +18,7 @@ axios.defaults.headers.post["Content-Type"] =
 if (process.env.NODE_ENV == "development") {
     // axios.defaults.baseURL = "http://47.107.146.154:405/"
 
-  axios.defaults.baseURL = "http://47.107.146.154:50090/"
+  axios.defaults.baseURL = "http://192.168.0.167:40050/"
   // axios.defaults.baseURL = "http://192.168.0.115:50090/"
   // axios.defaults.baseURL = "http://10.1.10.86:50090/"
 
