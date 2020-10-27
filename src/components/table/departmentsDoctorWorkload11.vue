@@ -1,0 +1,72 @@
+<template>
+  <!-- 科室医师工作量 -->
+  <div>
+    <h1>住 院 分 科 工 作 量 报 表</h1>
+    <h2>医院名称：</h2>
+    <el-table :data="tableData" stripe border style="width: 100%">
+      <el-table-column prop label="科别" align="center" width></el-table-column>
+      <el-table-column prop label="期末实有病床数" align="center" width></el-table-column>
+      <el-table-column prop label="期初原有人数" align="center" width></el-table-column>
+      <el-table-column prop label="入院人数" align="center" width></el-table-column>
+      <el-table-column prop label="他科转入人数" align="center" width></el-table-column>
+      <el-table-column prop label="出院人数" align="center" width>
+        <el-table-column prop label="合计" align="center" width></el-table-column>
+        <el-table-column prop label="出院病人数" align="center" width>
+          <el-table-column prop label="小计" align="center" width></el-table-column>
+          <el-table-column prop label="治愈" align="center" width></el-table-column>
+          <el-table-column prop label="好转" align="center" width></el-table-column>
+          <el-table-column prop label="未愈" align="center" width></el-table-column>
+          <el-table-column prop label="死亡" align="center" width></el-table-column>
+        </el-table-column>
+        <el-table-column prop label="其他" align="center" width></el-table-column>
+      </el-table-column>
+      <el-table-column prop label="转往他科人数" align="center" width></el-table-column>
+      <el-table-column prop label="期末留院人数" align="center" width></el-table-column>
+      <el-table-column prop label="实际开放总床日数" align="center" width></el-table-column>
+      <el-table-column prop label="平均开放病床数" align="center" width></el-table-column>
+      <el-table-column prop label="实际占用总床日数" align="center" width></el-table-column>
+      <el-table-column prop label="出院者占用总床日数" align="center" width></el-table-column>
+      <el-table-column prop label="陪伴人数" align="center" width></el-table-column>
+      <el-table-column prop label="平均住院日" align="center" width></el-table-column>
+      <el-table-column prop label="病床周转次数" align="center" width></el-table-column>
+      <el-table-column prop label="平均病床工作日" align="center" width></el-table-column>
+      <el-table-column prop label="病床使用率" align="center" width></el-table-column>
+      <el-table-column prop label="治愈率%" align="center" width></el-table-column>
+      <el-table-column prop label="好转率%" align="center" width></el-table-column>
+      <el-table-column prop label="病死率%" align="center" width></el-table-column>
+    </el-table>
+  </div>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      tableData: []
+    };
+  },
+  props: ["dataList"],
+  watch: {
+    dataList(val) {
+      this.tableData = val;
+    }
+  }
+};
+</script>
+
+<style scoped>
+h1 {
+  font-size: 24px;
+  text-align: center;
+  padding: 23px 0;
+}
+h3 {
+  text-align: center;
+  padding-bottom: 20px;
+}
+h2 {
+  padding: 4px 0;
+  display: flex;
+  justify-content: space-between;
+}
+</style>

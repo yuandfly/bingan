@@ -1,0 +1,148 @@
+.main {
+  overflow: hidden;
+  color: #3c3c3c;
+}
+.container {
+  padding: 10px;
+}
+.card {
+  border-color: #e0e0e0;
+}
+.card /deep/ .el-card__header {
+  padding: 0 10px;
+}
+.card-header {
+  overflow: hidden;
+  line-height: 40px;
+}
+.left-paging {
+  margin-top: 10px;
+  overflow: hidden;
+}
+.diagnose-table-box {
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.table {
+  text-align: center;
+  color: #3c3c3c;
+  display: block;
+  width: 100%;
+  margin-bottom: 15px;
+  max-height: 375px;
+  overflow-y: auto;
+  border-top: 1px solid #3c3c3c;
+  border-left: 1px solid #3c3c3c;
+}
+.table th,
+.table td {
+  width: 1%;
+  height: 40px;
+  padding: 0 5px;
+  vertical-align: middle;
+  line-height: 40px;
+  border-bottom: 1px solid #3c3c3c;
+  border-right: 1px solid #3c3c3c;
+  color: black;
+}
+.table th .table-input,
+.table td .table-input,
+.table th input,
+.table td input {
+  width: 100%;
+  border: none;
+  font-size: 14px;
+  color: #3c3c3c;
+}
+.table th .table-input:focus,
+.table td .table-input:focus,
+.table th input:focus,
+.table td input:focus {
+  outline: none;
+}
+.table th /deep/ .el-input__inner,
+.table td /deep/ .el-input__inner {
+  border: none;
+  font-size: 16px;
+  padding: 0 10px;
+  color: black;
+}
+.table th /deep/ .el-input__icon,
+.table td /deep/ .el-input__icon {
+  line-height: 20px;
+  display: none;
+}
+.table-delete {
+  color: #F56C6C;
+  font-size: 12px;
+  cursor: pointer;
+}
+.fixed-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: #ffffff;
+  overflow: hidden;
+  z-index: 999;
+  box-shadow: 0 -4px 10px 0 #d9d9d9;
+}
+.footer-btn-box {
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #d9d9d9;
+}
+.err-drawer {
+  overflow: hidden;
+  width: 49%;
+}
+.err-drawer-header {
+  line-height: 40px;
+  padding: 0 10px;
+  color: #696969;
+}
+.err-drawer-header .err-drawer-headericon {
+  transform: rotate(90deg);
+  line-height: 40px;
+  float: right;
+  font-size: 18px;
+  color: #409eff;
+  font-weight: bolder;
+  cursor: pointer;
+}
+.err-drawer-body {
+  padding: 0 10px;
+}
+.medical_record .el-aside {
+  line-height: 32px !important;
+}
+.ellipsis {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.table th.cz,
+.table td.cz {
+  width: 0.1%;
+}
+.table th.rybq,
+.table td.rybq {
+  width: 0.17%;
+}
+.table th.gz,
+.table td.gz {
+  width: 0.15%;
+}
+.table th.icd10,
+.table td.icd10 {
+  width: 0.4%;
+}
+.table th.fjm,
+.table td.fjm {
+  width: 0.1%;
+}
+.table td.zyzd {
+  width: 0.1%;
+}

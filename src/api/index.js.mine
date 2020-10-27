@@ -1,0 +1,100 @@
+//接口的业务请求名称
+
+import {
+	get,
+	post,
+	put,
+	deletes
+} from "../utils/http";
+//用户模块
+export const loginAdmin = params => {
+	return post("/adminLogin/login", params);
+}
+//用户退出模块   这个退出有点问题
+export const logout = params => {
+	return get("/api/adminLogin/logout", params);
+}
+
+//---------------病案首页条件查询----------------
+//病案首页条件查询接口
+export const SearchHomePage = params => {
+	return post("/web/baza/getList", params);
+}
+// 根据病案号搜索病人
+export const QueryPatient = Baza00 => {
+	return post("/web/baza/getListByBaza00", Baza00);
+}
+
+
+
+/*********字典维护***********/
+//医师查询
+export const GetDoctorDictionary = params => {
+	return axios.post("/web/systemManagement/GetDoctorDictionary", params);
+}
+export const UpdategetDoctorDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateDoctorDictionary", params);
+}
+//获取住院科室(不带分页)
+export const GetDepartmentDictionary = params => {
+	return axios.post("/web/systemManagement/GetDepartmentDictionary", params);
+}
+//更新住院科室
+export const UpdateDepartmentDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateDepartmentDictionary", params);
+}
+//获取门急诊查询
+export const GetOutpatientDepartment = params => {
+	return axios.post("/web/systemManagement/GetOutpatientDepartment", params);
+}
+
+//修改门急诊查询
+export const UpdateOutpatientDepartment = params => {
+	return axios.post("/web/systemManagement/UpdateOutpatientDepartment", params);
+}
+
+//获取门观科查询
+export const GetObservationRoom = params => {
+	return axios.post("/web/systemManagement/GetObservationRoom", params);
+}
+
+//修改门观科
+export const UpdateObservationRoom = params => {
+	return axios.post("/web/systemManagement/UpdateObservationRoom", params);
+}
+
+
+//获取医技科室查询
+export const GetMedicalLaboratory = params => {
+	return axios.post("/web/systemManagement/GetMedicalLaboratory", params);
+}
+
+//修改医技科室
+export const UpdateMedicalLaboratory = params => {
+	return axios.post("/web/systemManagement/UpdateMedicalLaboratory", params);
+}
+
+
+//获取民族查询
+export const GetNationDictionary = params => {
+	return axios.post("/web/systemManagement/GetNationDictionary", params);
+}
+
+//修改民族代码
+export const UpdateNationDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateNationDictionary", params);
+}
+
+
+//获取病区(不带分页)
+export const GetInpatientArea = params => {
+	return axios.post("/web/systemManagement/GetInpatientArea", params);
+}
+//获取科目(不带分页)
+export const GetMedicalSubjects = params => {
+	return axios.post("/web/systemManagement/GetMedicalSubjects", params);
+}
+//获取统计归口(不带分页)
+export const GetDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/GetDepartmentStatistics", params);
+}

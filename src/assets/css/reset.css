@@ -1,0 +1,165 @@
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html,
+body,
+div,
+span,
+applet,
+object,
+iframe,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+blockquote,
+pre,
+a,
+abbr,
+acronym,
+address,
+big,
+cite,
+code,
+del,
+dfn,
+em,
+img,
+ins,
+kbd,
+q,
+s,
+samp,
+small,
+strike,
+strong,
+sub,
+sup,
+tt,
+var,
+b,
+u,
+i,
+center,
+dl,
+dt,
+dd,
+ol,
+ul,
+li,
+fieldset,
+form,
+label,
+legend,
+table,
+caption,
+tbody,
+tfoot,
+thead,
+tr,
+th,
+td,
+article,
+aside,
+canvas,
+details,
+embed,
+figure,
+figcaption,
+footer,
+header,
+hgroup,
+menu,
+nav,
+output,
+ruby,
+section,
+summary,
+time,
+mark,
+audio,
+video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+
+
+/* HTML5 display-role reset for older browsers */
+
+article,
+aside,
+details,
+figcaption,
+figure,
+footer,
+header,
+hgroup,
+menu,
+nav,
+section {
+    display: block;
+}
+
+body {
+    line-height: 1;
+}
+
+ol,
+ul {
+    list-style: none;
+}
+
+blockquote,
+q {
+    quotes: none;
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+.medical_record .el-table td{ padding: 4px 0;}
+.el-divider__text{ background: none;}
+.journal .el-form-item.is-error .el-input__inner {
+    background-color: rgb(253, 99, 99);
+    color: #fff;
+}
+.journal .el-table th{ padding: 4px 0;}
+.journal .el-table td{ padding: 1px 0;}
+.journal .el-table td div{ height: 22px;}
+.journal .el-form-item__content{ line-height: 22px;}
+.journal .el-table{ overflow:visible !important; }
+.journal .el-card__body { padding: 20px 20px 50px 20px; }
+.journal .el-table .cell{ line-height: 22px; padding-left: 1px; padding-right: 1px;}
+.journal .el-input--mini .el-input__inner{ height: 22px; line-height: 22px;}
+.journal .el-input__inner{ background: none; border: none;}
+.physician .el-dialog__body{ padding: 15px 20px;}
+.system_contentBox .el-input-group__prepend {
+    width: 94px;
+    text-align: right;
+  }
+.system_contentBox .el-col{ padding: 0 4px;}
+.system_contentBox .el-row{ margin: 3px 0;}
+.editPatientCode .el-table__body tr.current-row>td{
+    background-color: #409EFF !important;
+    color: #fff;
+  }
+.dict_lan .el-form-item{
+    margin-bottom:0
+}  

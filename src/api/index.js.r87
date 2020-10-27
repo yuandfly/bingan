@@ -1,0 +1,195 @@
+//接口的业务请求名称
+import axios from 'axios'
+import {
+	get,
+	post,
+	put,
+	deletes
+} from "../utils/http";
+//用户模块
+export const loginAdmin = params => {
+	return post("/adminLogin/login", params);
+}
+//用户退出模块   这个退出有点问题
+export const logout = params => {
+	return get("/adminLogin/logout", params);
+}
+//---------------病案首页条件查询----------------
+//病案首页条件查询查
+
+/*********字典维护***********/
+//医师查询
+export const GetDoctorDictionary = params => {
+	return axios.post("/web/systemManagement/GetDoctorDictionary", params);
+}
+export const UpdategetDoctorDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateDoctorDictionary", params);
+}
+//获取住院科室(不带分页)
+export const GetDepartmentDictionary = params => {
+	return axios.post("/web/systemManagement/GetDepartmentDictionary", params);
+}
+//更新住院科室
+export const UpdateDepartmentDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateDepartmentDictionary", params);
+}
+//获取门急诊查询
+export const GetOutpatientDepartment = params => {
+	return axios.post("/web/systemManagement/GetOutpatientDepartment", params);
+}
+
+//修改门急诊查询
+export const UpdateOutpatientDepartment = params => {
+	return axios.post("/web/systemManagement/UpdateOutpatientDepartment", params);
+}
+
+//获取门观科查询
+export const GetObservationRoom = params => {
+	return axios.post("/web/systemManagement/GetObservationRoom", params);
+}
+
+//修改门观科
+export const UpdateObservationRoom = params => {
+	return axios.post("/web/systemManagement/UpdateObservationRoom", params);
+}
+
+
+//获取医技科室查询
+export const GetMedicalLaboratory = params => {
+	return axios.post("/web/systemManagement/GetMedicalLaboratory", params);
+}
+
+//修改医技科室
+export const UpdateMedicalLaboratory = params => {
+	return axios.post("/web/systemManagement/UpdateMedicalLaboratory", params);
+}
+
+
+//获取民族查询
+export const GetNationDictionary = params => {
+	return axios.post("/web/systemManagement/GetNationDictionary", params);
+}
+
+//修改民族代码
+export const UpdateNationDictionary = params => {
+	return axios.post("/web/systemManagement/UpdateNationDictionary", params);
+}
+
+
+//获取病区(不带分页)
+export const GetInpatientArea = params => {
+	return axios.post("/web/systemManagement/GetInpatientArea", params);
+}
+
+
+
+
+//获取行政区划字典信息
+export const GetDistrict = params => {
+	return axios.post("/web/systemManagement/GetDistrict", params);
+}
+
+//修改行政区划字典信息
+export const UpdateDistrict = params => {
+	return axios.post("/web/systemManagement/UpdateDistrict", params);
+}
+
+//获取中医病、证代码表
+export const GetTCM_Disease = params => {
+	return axios.post("/web/systemManagement/GetTCM_Disease", params);
+}
+
+//修改中医病、证代码字典信息
+export const UpdateTCM_Disease = params => {
+	return axios.post("/web/systemManagement/UpdateTCM_Disease", params);
+}
+
+//获取科目(不带分页)
+export const GetMedicalSubjects = params => {
+	return axios.post("/web/systemManagement/GetMedicalSubjects", params);
+}
+
+//修改诊疗科目代码字典信息
+export const UpdateMedicalSubjects = params => {
+	return axios.post("/web/systemManagement/UpdateMedicalSubjects", params);
+}
+
+//获取过敏药物代码字典信息
+export const GetAllergyDrugs = params => {
+	return axios.post("/web/systemManagement/GetAllergyDrugs", params);
+}
+
+//修改过敏药物代码字典信息
+export const UpdateAllergyDrugs = params => {
+	return axios.post("/web/systemManagement/UpdateAllergyDrugs", params);
+}
+
+//获取麻醉方法代码字典信息
+export const GetAnesthesia = params => {
+	return axios.post("/web/systemManagement/GetAnesthesia", params);
+}
+
+//修改麻醉方法代码字典信息
+export const UpdateAnesthesia = params => {
+	return axios.post("/web/systemManagement/UpdateAnesthesia", params);
+}
+
+//获取重点医技诊断代码字典信息
+export const GetKeyDiagnosis = params => {
+	return axios.post("/web/systemManagement/GetKeyDiagnosis", params);
+}
+
+//修改重点医技诊断代码字典信息
+export const UpdateKeyDiagnosis = params => {
+	return axios.post("/web/systemManagement/UpdateKeyDiagnosis", params);
+}
+
+//获取生产胎方位代码字典信息
+export const GetFetalPosition = params => {
+	return axios.post("/web/systemManagement/GetFetalPosition", params);
+}
+
+//修改生产胎方位代码字典信息
+export const UpdateFetalPosition = params => {
+	return axios.post("/web/systemManagement/UpdateFetalPosition", params);
+}
+
+//获取统计归口(不带分页)
+export const GetDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/GetDepartmentStatistics", params);
+}
+
+//修改上报科室统计归口代码字典信息
+export const UpdateDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/UpdateDepartmentStatistics", params);
+}
+
+//获取门诊科室统计分类代码字典信息
+export const GetOutpatientDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/GetOutpatientDepartmentStatistics", params);
+}
+
+//修改门诊科室统计分类代码字典信息
+export const UpdateOutpatientDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/UpdateOutpatientDepartmentStatistics", params);
+}
+
+//获取住院科室统计分类代码字典信息
+export const GetInpatientDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/GetInpatientDepartmentStatistics", params);
+}
+
+//修改住院科室统计分类代码字典信息
+export const UpdateInpatientDepartmentStatistics = params => {
+	return axios.post("/web/systemManagement/UpdateInpatientDepartmentStatistics", params);
+}
+
+//获取各地街道名称代码字典信息
+export const GetStreet = params => {
+	return axios.post("/web/systemManagement/GetStreet", params);
+}
+
+//修改各地街道名称代码字典信息
+export const UpdateStreet = params => {
+	return axios.post("/web/systemManagement/UpdateStreet", params);
+}
