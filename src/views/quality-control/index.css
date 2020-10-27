@@ -41,7 +41,6 @@
   flex-grow: 5;
 }
 .right-footer {
-  border-top: 1px solid #EBEEF5;
   padding: 10px;
   display: flex;
   align-items: center;

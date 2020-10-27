@@ -4,10 +4,10 @@ import OutPutDialog from './components/output-dialog.vue';
 import medicalDialog from './components/medicalDialog.vue';
 import { mapMutations } from "vuex";
 import { GroupNameSelect, ConditionSelect, ConditionDel, ConditionSave, RandomSearch } from '../../api/randomSearch';
-import {getItemList,getQualityList,updateQuality,addQuality} from '@/api/qualityControl'
+
 export default {
-    name: "qualityControl",
-    components: { DictInput, PagingToolbar, OutPutDialog, medicalDialog },
+    name: "item-control",
+    components: { DictInput, PagingToolbar, OutPutDialog,medicalDialog},
     data() {
         return {
             // 条件右侧表格高度
@@ -47,78 +47,39 @@ export default {
             dialogTableVisible: false,
             // 输出用到的已处理好的条件组 (在随机查询之后将其设置，用于输出)
             conditionList: undefined,
-        /* ---------质控-------- */
-            checkItmeList: [], //检查项列表
-            checkItmeId:'',
-            lb: 1, //类别
-            qualityList:[], //已有评分规则
+            /* 分数 */
+            itemScore:null
         }
     },
-    computed: {
-        isUpdate() {
-           return  this.qualityList.length > 0 ? false : true
+    props: {
+        qualityItem:{
+            type: Array,
+            default:[]
+        },
+        score: {
+            type: Number,
+            default:null 
         }
     },
     created() {
-        window.addEventListener('resize', this.calcHeight)
-        this.getList()
+        this.itemScore = this.score
+        this.initData()
     },
-
     mounted() {
-        this.$nextTick(function () {
-            this.calcHeight();
-        });
+     
         // 获取已保存的条件组
         this.getSavedGroup()
     },
-
     deactivated() {
         this.dictInputDialog.visible = false
     },
 
-    destroyed() {
-        window.removeEventListener('resize', this.calcHeight)
-    },
+ 
 
     methods: {
 
         ...mapMutations("homepage", ["setSearchInfo"]),
-               
-        
-    /* ------质控start--------- */
-        /* 获取检查项目 */
-        getList() {
-            getItemList().then(res => {
-                this.checkItmeList = res.data
-            }, error => {
-                    this.$message.error(`获取检查项目异常${error}`)
-            }) 
-        },
-        /* 查询已有评分项 */
-        queryQaulityItem() {
-            const params = {
-                zktjId:this.checkItmeId,
-                lb:this.lb
-            }
-            getQualityList(params).then(res=>{}, error => {
-                this.$message.error(`获取评分项异常${error}`)
-        }) 
-        },
-        /* 保存 */
-        submitHandler() {
-            if (isUpdate) {
-                updateQuality().then()
-            } else {
-                addQuality().then()
-            }
-        },
-        /* ------质控end--------- */
-
-        calcHeight() {
-            if (this.$refs.leftBox.$el) {
-                this.rightContentHeight = this.$refs.leftBox.$el.offsetHeight - 53 + 'px';
-            }
-        },
+    
 
         /* ----------------------------------- 左侧条件组相关--------------------------------------------- */
 
@@ -130,6 +91,27 @@ export default {
                 this.currentIndex = 0;
             }
             this.$refs.groupAdd.blur()
+        },
+
+    /* 外部传入初始值 */
+        initData() {
+              this.conditionItems = this.qualityItem.map((item, index) => ({
+                  index,
+                  conditionField: item.cxx,
+                  conditionFieldName: item.name,
+                  conditionValue: item.ysz,
+                  conditionValueName: item.yszt,
+                  conditionRelation: item.gxf,
+                  itemRelation: item.glf,
+                  bzk: item.bzk, // 值的字典表
+                  bzkdmmc: item.bzkdmmc, // 字典字段
+                  type: item.type, // 条件类型
+                  xh: item.xh, // 排序
+                  km: item.km, // 条件项所在表名
+                  fh1: item.fh1, // 左括号
+                  fh2: item.fh2 // 右括号
+              }));
+            this.pager = { page: 1, rows: 10, total: 0 };
         },
 
         // 选择已有的条件组：根据选择的条件组名称，获取所有条件项
@@ -487,7 +469,6 @@ export default {
 
         // 字典选择
         handleDictInputSubmit(dictRow) {
-            console.log(dictRow);
             const { rowIndex, fields } = this.dictInputDialog.currentOpener;
             const conditionItems = this.conditionItems.slice();
             fields.forEach(item => {

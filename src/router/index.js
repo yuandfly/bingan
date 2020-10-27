@@ -375,7 +375,7 @@ const routes = [{
             path: 'control',
             name:'qualityControl',
             component: () =>
-                    import("@/views/quality-control/index.vue")
+                    import("@/views/quality-control/main.vue")
         }
     ]
 },

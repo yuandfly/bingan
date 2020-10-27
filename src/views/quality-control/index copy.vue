@@ -1,11 +1,72 @@
 <template>
-  <div>
+  <div class="page-random-search">
+    <el-card shadow="never" body-style="padding: 0">
+      <el-col :lg="8" :md="8" :sm="8" :xs="24" ref="leftBox">
+        <div class="left-new-condition">
+          <p class="left-desc">
+            检查项目
+          </p>
+          <el-select
+            class="left-select"
+            style="width: 100%"
+            size="small"
+            v-model="checkItmeId"
+            @change="queryQaulityItem"
+          >
+            <el-option
+              v-for="item in checkItmeList"
+              :value="item.value"
+              :label="item.label"
+              :key="item.value"
+            ></el-option>
+          </el-select>
+        </div>
+      </el-col>
+      <el-col :lg="8" :md="8" :sm="8" :xs="24" ref="leftBox">
+        <div class="left-new-condition">
+          <p class="left-desc">
+            项目类别
+          </p>
+          <el-select
+            class="left-select"
+            style="width: 100%"
+            size="small"
+            v-model="lb"
+            @change="queryQaulityItem"
+          >
+            <el-option :value="1" label="A类"></el-option>
+            <el-option :value="2" label="B类"></el-option>
+            <el-option :value="3" label="C类"></el-option>
+            <el-option :value="4" label="D类"></el-option>
+          </el-select>
+        </div>
+      </el-col>
+      <el-col :lg="8" :md="8" :sm="8" :xs="24" ref="leftBox">
+        <div class="left-new-condition">
+          <p class="left-desc">
+            分数
+          </p>
+          <el-input
+            class="left-input"
+            type="number"
+            size="small"
+            placeholder="请输入"
+            v-model="addGroupName"
+            ref="groupAdd"
+            @keyup.native.13="handleCreateGroup"
+          ></el-input>
+        </div>
+      </el-col>
+    </el-card>
+    <div class="add-rule">
+      <el-button type="primary" plain size="small">添加评分项</el-button>
+    </div>
     <el-card class="card" shadow="never" body-style="padding: 0">
-      <el-row :gutter="0">
+      <el-row :gutter="0" v-for="(qualityItem, i) in qualityList" :key="i">
         <el-col>
           <div class="right-content">
             <el-table
-              :data="conditionItems"
+              :data="qualityItem.zkzbDOList"
               class="table"
               border
               empty-text="暂无条件项"
@@ -132,7 +193,6 @@
                     type="number"
                     placeholder="请输入分值"
                     size="mini"
-                    v-model="itemScore"
                     v-else
                   ></el-input>
                 </template>
@@ -165,6 +225,15 @@
         </el-col>
       </el-row>
     </el-card>
+    <div class="submit-box">
+      <el-button
+        size="small"
+        type="primary"
+        @click="submitHandler"
+        icon="el-icon-check"
+        >保存</el-button
+      >
+    </div>
     <dict-input
       :visible.sync="dictInputDialog.visible"
       :dictType="dictInputDialog.dictType"
