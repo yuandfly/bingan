@@ -14,6 +14,9 @@
               @cell-dblclick="handleAddBrackets"
             >
               <el-table-column prop="index" width="40">
+                <template slot="header">
+                  <slot name="del"></slot>
+                </template>
                 <template slot-scope="scope">
                   <i
                     v-if="scope.row.index === currentIndex"

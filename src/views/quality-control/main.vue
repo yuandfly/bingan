@@ -57,15 +57,18 @@
       </el-col>
     </el-card>
     <div class="add-rule">
-      <el-button type="primary" plain size="small">添加评分项</el-button>
+      <el-button type="primary" plain size="small" @click="addItem"
+        >添加评分项</el-button
+      >
     </div>
     <div v-for="(item, i) in qualityList" :key="i">
-      <ItemControl
-        :qualityItem="item.zkzbDOList"
-        :score="item.fs"
-      ></ItemControl>
+      <ItemControl :qualityItem="item.zkzbDOList" :score="item.fs" ref="item">
+        <template v-slot:del>
+          <div class="icon-del" @click="delItem(i)">x</div>
+        </template>
+      </ItemControl>
     </div>
-    <div class="submit-box">
+    <div class="submit-box" v-if="saveShow">
       <el-button
         size="small"
         type="primary"
@@ -95,11 +98,12 @@ export default {
       lb: 1, //类别,
       totalScore: null,
       qualityList: [], //已有评分规则
+      isUpdate: false,
     };
   },
   computed: {
-    isUpdate() {
-      return this.qualityList.length > 0 ? false : true;
+    saveShow() {
+      return this.qualityList.length > 0 ? true : false;
     },
   },
   created() {
@@ -126,15 +130,38 @@ export default {
       getQualityList(params).then(
         (res) => {
           this.qualityList = res.data;
+          this.isUpdate = this.qualityList.length > 0 ? false : true;
         },
         (error) => {
           this.$message.error(`获取评分项异常${error}`);
         }
       );
     },
+
+    /* 增加项 */
+    addItem() {
+      this.qualityList.push({});
+    },
+    /* 删除项 */
+    delItem(index) {
+      this.$confirm('将删除该评分项, 是否继续?', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning',
+      })
+        .then(() => {
+          this.qualityList.splice(index, 1);
+        })
+        .catch(() => {});
+    },
     /* 保存 */
     submitHandler() {
-      if (isUpdate) {
+      console.log('this.$refs.item', this.$refs.item);
+      const res = this.$refs.item.map((item, i) => {
+        return item.dealConditionItems();
+      });
+      console.log('res', res);
+      if (this.isUpdate) {
         updateQuality().then();
       } else {
         addQuality().then();
@@ -208,5 +235,9 @@ export default {
     border-top: 1px solid #ebeef5;
     margin-top: 10px;
   }
+}
+.icon-del {
+  text-align: center;
+  cursor: pointer;
 }
 </style>

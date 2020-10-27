@@ -54,7 +54,7 @@ export default {
     props: {
         qualityItem:{
             type: Array,
-            default:[]
+            default:()=>[]
         },
         score: {
             type: Number,
@@ -109,7 +109,7 @@ export default {
                   xh: item.xh, // 排序
                   km: item.km, // 条件项所在表名
                   fh1: item.fh1, // 左括号
-                  fh2: item.fh2 // 右括号
+                  fh2: item.fh2 // 右括号,
               }));
             this.pager = { page: 1, rows: 10, total: 0 };
         },
@@ -230,7 +230,6 @@ export default {
                 // newCondition.fh2 = ")";
             }
             conditionItems.push(newCondition);
-            console.log(conditionItems, '增加后的');
             this.conditionItems = conditionItems;
             this.currentIndex = conditionItems.length - 1;
             this.$nextTick(() => {
