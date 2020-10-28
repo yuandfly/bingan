@@ -59,6 +59,10 @@ export default {
         score: {
             type: Number,
             default:null 
+        },
+        linkId: {
+            type: String|Number,
+            default:'' 
         }
     },
     created() {

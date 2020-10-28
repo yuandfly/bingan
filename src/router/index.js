@@ -376,6 +376,12 @@ const routes = [{
             name:'qualityControl',
             component: () =>
                     import("@/views/quality-control/main.vue")
+        },
+        {
+            path: 'controllist',
+            name:'controlList',
+            component: () =>
+                    import("@/views/quality-control/list.vue")
         }
     ]
 },

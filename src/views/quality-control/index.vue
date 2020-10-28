@@ -135,7 +135,7 @@
                     type="number"
                     placeholder="请输入分值"
                     size="mini"
-                    v-model="itemScore"
+                    v-model.trim="itemScore"
                     v-else
                   ></el-input>
                 </template>

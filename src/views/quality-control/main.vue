@@ -10,7 +10,7 @@
             class="left-select"
             style="width: 100%"
             size="small"
-            v-model="checkItmeId"
+            v-model.trim="checkItmeId"
             @change="queryQaulityItem"
           >
             <el-option
@@ -51,22 +51,36 @@
             type="number"
             size="small"
             placeholder="请输入"
-            v-model="totalScore"
+            v-model.trim="totalScore"
           ></el-input>
         </div>
       </el-col>
     </el-card>
     <div class="add-rule">
-      <el-button type="primary" plain size="small" @click="addItem"
+      <el-button
+        type="primary"
+        plain
+        size="small"
+        :disabled="addable"
+        @click="addItem"
         >添加评分项</el-button
       >
     </div>
-    <div v-for="(item, i) in qualityList" :key="i">
-      <ItemControl :qualityItem="item.zkzbDOList" :score="item.fs" ref="item">
-        <template v-slot:del>
-          <div class="icon-del" @click="delItem(i)">x</div>
-        </template>
-      </ItemControl>
+    <div v-loading="loading">
+      <template v-if="!loading">
+        <div v-for="(item, i) in qualityList" :key="i">
+          <ItemControl
+            :qualityItem="item.zkzbDOList"
+            :score="item.fs"
+            :linkId="item.linkId"
+            ref="item"
+          >
+            <template v-slot:del>
+              <div class="icon-del" @click="delItem(i)">x</div>
+            </template>
+          </ItemControl>
+        </div>
+      </template>
     </div>
     <div class="submit-box" v-if="saveShow">
       <el-button
@@ -99,11 +113,18 @@ export default {
       totalScore: null,
       qualityList: [], //已有评分规则
       isUpdate: false,
+      loading: false,
     };
   },
   computed: {
     saveShow() {
       return this.qualityList.length > 0 ? true : false;
+    },
+    addable() {
+      return this.checkItmeId && this.lb ? false : true;
+    },
+    btnTxt() {
+      return this.isUpdate ? '更新' : '保存';
     },
   },
   created() {
@@ -123,14 +144,19 @@ export default {
     },
     /* 查询已有评分项 */
     queryQaulityItem() {
+      if (!this.checkItmeId || !this.lb) {
+        return false;
+      }
+      this.loading = true;
       const params = {
         zktjId: this.checkItmeId,
         lb: this.lb,
       };
       getQualityList(params).then(
         (res) => {
-          this.qualityList = res.data;
-          this.isUpdate = this.qualityList.length > 0 ? false : true;
+          this.qualityList = res.data ? Object.assign([], res.data) : [];
+          this.isUpdate = this.qualityList.length > 0 ? true : false;
+          this.loading = false;
         },
         (error) => {
           this.$message.error(`获取评分项异常${error}`);
@@ -140,7 +166,7 @@ export default {
 
     /* 增加项 */
     addItem() {
-      this.qualityList.push({});
+      this.qualityList.push({ zkzbDOList: [], fs: null, linkId: null });
     },
     /* 删除项 */
     delItem(index) {
@@ -157,24 +183,38 @@ export default {
     /* 保存 */
     submitHandler() {
       const params = this.$refs.item.map((item, i) => {
-        const score = item.itemScore;
+        const linkId = item.linkId;
+        let score = Number(item.itemScore);
         const itemData = item.dealConditionItems();
-        itemData.forEach((row) => {
+        itemData.forEach((row, i) => {
+          if (i === 0) {
+            row.fs = score;
+          } else {
+            row.fs = null;
+          }
           row.lb = this.lb;
           row.id = this.checkItmeId;
         });
         return {
+          linkId,
           lb: this.lb,
-          fs: score,
-          linkId: this.checkItmeId,
+          fs: this.totalScore,
+          zktjId: this.checkItmeId,
           zkzbDO: itemData,
         };
       });
-      if (this.isUpdate) {
-        updateQuality(params).then();
-      } else {
-        addQuality(params).then();
-      }
+      addQuality(params).then(
+        (res) => {
+          this.checkItmeId = '';
+          this.lb = 1;
+          this.qualityList = [];
+          this.$message.success('保存成功！');
+          this.getList();
+        },
+        (error) => {
+          this.$message.error(`保存异常${error}`);
+        }
+      );
     },
   },
 };
