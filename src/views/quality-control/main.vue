@@ -60,7 +60,7 @@
       <el-button
         type="primary"
         plain
-        size="small"
+        size="mini"
         :disabled="addable"
         @click="addItem"
         >添加评分项</el-button
@@ -73,6 +73,7 @@
             :qualityItem="item.zkzbDOList"
             :score="item.fs"
             :linkId="item.linkId"
+            :module="item.zkmc"
             ref="item"
           >
             <template v-slot:del>
@@ -84,7 +85,7 @@
     </div>
     <div class="submit-box" v-if="saveShow">
       <el-button
-        size="small"
+        size="mini"
         type="primary"
         @click="submitHandler"
         icon="el-icon-check"
@@ -184,6 +185,7 @@ export default {
     submitHandler() {
       const params = this.$refs.item.map((item, i) => {
         const linkId = item.linkId;
+        const moduleName = item.moduleName;
         let score = Number(item.itemScore);
         const itemData = item.dealConditionItems();
         itemData.forEach((row, i) => {
@@ -197,6 +199,7 @@ export default {
         });
         return {
           linkId,
+          zkmc: moduleName,
           lb: this.lb,
           fs: this.totalScore,
           zktjId: this.checkItmeId,

@@ -1,6 +1,10 @@
 <template>
   <div>
     <el-card class="card" shadow="never" body-style="padding: 0">
+      <el-row class="module-name"
+        ><div class="name-label">模块名称</div>
+        <el-input v-model="moduleName" size="mini"></el-input
+      ></el-row>
       <el-row :gutter="0">
         <el-col>
           <div class="right-content">
@@ -143,22 +147,18 @@
             </el-table>
           </div>
           <div class="right-footer">
-            <el-button
-              size="small"
-              type="primary"
-              plain
-              @click="handleAddItem()"
+            <el-button size="mini" type="primary" plain @click="handleAddItem()"
               >增加</el-button
             >
             <el-button
-              size="small"
+              size="mini"
               type="primary"
               plain
               @click="handleRemoveItem()"
               >删除</el-button
             >
             <el-button
-              size="small"
+              size="mini"
               type="primary"
               plain
               @click="handleInsertItem()"

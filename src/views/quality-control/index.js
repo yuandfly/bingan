@@ -48,7 +48,9 @@ export default {
             // 输出用到的已处理好的条件组 (在随机查询之后将其设置，用于输出)
             conditionList: undefined,
             /* 分数 */
-            itemScore:null
+            itemScore: null,
+        /* 模块名称 */
+        moduleName:''
         }
     },
     props: {
@@ -63,10 +65,15 @@ export default {
         linkId: {
             type: String|Number,
             default:'' 
+        },
+        module:{
+            type: String,
+            default:''
         }
     },
     created() {
         this.itemScore = this.score
+        this.moduleName = this.module
         this.initData()
     },
     mounted() {
