@@ -2,9 +2,19 @@
   <div>
     <el-card class="card" shadow="never" body-style="padding: 0">
       <el-row class="module-name"
-        ><div class="name-label">模块名称</div>
-        <el-input v-model="moduleName" size="mini"></el-input
-      ></el-row>
+        ><div class="name-label">评分项目</div>
+        <el-input
+          class="name-input"
+          v-model.trim="moduleName"
+          size="mini"
+          @keyup.native.32="handleOpenDictDialog($event, 'module', 1)"
+        ></el-input>
+        <!-- <el-checkbox
+          class="check-required"
+          :disabled="!moduleName"
+          v-model="checkRequired"
+          >检查必填请打√</el-checkbox> -->
+      </el-row>
       <el-row :gutter="0">
         <el-col>
           <div class="right-content">
@@ -42,7 +52,7 @@
                   />
                 </template>
               </el-table-column>
-              <el-table-column prop="name" label="评分项" align="center">
+              <el-table-column prop="name" label="条件项" align="center">
                 <template slot-scope="scope">
                   <el-input
                     :id="'conditionField-' + scope.row.index"
@@ -146,7 +156,7 @@
               </el-table-column>
             </el-table>
           </div>
-          <div class="right-footer">
+          <div class="right-footer" v-show="!checkRequired">
             <el-button size="mini" type="primary" plain @click="handleAddItem()"
               >增加</el-button
             >

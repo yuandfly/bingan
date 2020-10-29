@@ -50,7 +50,11 @@ export default {
             /* 分数 */
             itemScore: null,
         /* 模块名称 */
-        moduleName:''
+            moduleName: '',
+        /* 模块选择标记 */
+            selectModule: false,
+        /* 检查该项必填 */
+        checkRequired:false
         }
     },
     props: {
@@ -85,7 +89,28 @@ export default {
         this.dictInputDialog.visible = false
     },
 
- 
+    watch: {
+        checkRequired(val) {
+            if (val) {
+                this.conditionItems = [{
+                    index:1,
+                    conditionField: '',
+                    conditionFieldName: '',
+                    conditionValue: '',
+                    conditionValueName: '',
+                    conditionRelation: '',
+                    itemRelation: '',
+                    bzk: '', // 值的字典表
+                    bzkdmmc: '', // 字典字段
+                    type: '', // 条件类型
+                    xh: '', // 排序
+                    km: '', // 条件项所在表名
+                    fh1: '', // 左括号
+                    fh2: '' // 右括号,
+                }]
+            }
+        }
+    },
 
     methods: {
 
@@ -440,6 +465,7 @@ export default {
          * @param rowIndex
          */
         handleOpenDictDialog(e, name, rowIndex) {
+            this.selectModule = false
             if (name === 'field') {
                 this.dictInputDialog = {
                     visible: true,
@@ -474,20 +500,42 @@ export default {
                     }
                 };
                 e.target.blur();
+            } else if (name === 'module') {
+                this.selectModule = true
+                this.dictInputDialog = {
+                    visible: true,
+                    dictType: 'conditionDict',
+                    currentOpener: {
+                        rowIndex,
+                        fields: [
+                            // { dictField: 'dm', targetField: 'conditionField' },
+                            // { dictField: 'dmmc', targetField: 'conditionFieldName' },
+                            // { dictField: 'fieldKu', targetField: 'km' },
+                            // { dictField: 'fieldDmkm', targetField: 'bzk' },
+                            // { dictField: 'fieldDmmc', targetField: 'bzkdmmc' },
+                            // { dictField: 'fieldType', targetField: 'type' }
+                        ]
+                    }
+                };
             }
         },
 
         // 字典选择
         handleDictInputSubmit(dictRow) {
-            const { rowIndex, fields } = this.dictInputDialog.currentOpener;
-            const conditionItems = this.conditionItems.slice();
-            fields.forEach(item => {
-                conditionItems[rowIndex][item.targetField] = dictRow[item.dictField] || undefined
-            });
-            this.conditionItems = conditionItems;
-            this.$nextTick(function () {
-                this.focusNext(`${fields[0].targetField}-${rowIndex}`)
-            })
+            if (this.selectModule) {
+                console.log('dictRow', dictRow) 
+                this.moduleName = dictRow.dmmc
+            } else {
+                const { rowIndex, fields } = this.dictInputDialog.currentOpener;
+                const conditionItems = this.conditionItems.slice();
+                fields.forEach(item => {
+                    conditionItems[rowIndex][item.targetField] = dictRow[item.dictField] || undefined
+                });
+                this.conditionItems = conditionItems;
+                this.$nextTick(function () {
+                    this.focusNext(`${fields[0].targetField}-${rowIndex}`)
+                })
+            }
         },
 
         // 去往首页编辑
