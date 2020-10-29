@@ -40,8 +40,8 @@ if (process.env.NODE_ENV == "development") {
 } else if (process.env.NODE_ENV == "production") {
 
 
-  //  axios.defaults.baseURL = "http://47.107.146.154:50090/" // 阿里云
-   axios.defaults.baseURL = "http://172.20.2.148:50090/" // 温岭
+   axios.defaults.baseURL = "http://47.107.146.154:50090/" // 阿里云
+//    axios.defaults.baseURL = "http://172.20.2.148:50090/" // 温岭
 
    // axios.defaults.baseURL = "http://10.1.10.86:50090/" // 省中医
   //  axios.defaults.baseURL = "http://10.1.10.86:50090/" // 省中医

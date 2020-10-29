@@ -373,13 +373,15 @@ const routes = [{
         },
         {
             path: 'control',
-            name:'qualityControl',
+            name: 'qualityControl',
+            meta: { title: '质控规则配置' },
             component: () =>
                     import("@/views/quality-control/main.vue")
         },
         {
             path: 'controllist',
-            name:'controlList',
+            name: 'controlList',
+            meta: { title: '评分列表' },
             component: () =>
                     import("@/views/quality-control/list.vue")
         }
