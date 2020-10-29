@@ -27,5 +27,5 @@ export const addQuality = (param={}) => {
 
 /* 查询医师病案质控结果 */
 export const getDoctorResult = (param={}) => {
-  return post('/web/baza/doctorResult',param);
+  return post('/web/qualityController/doctorResult',param);
 };
