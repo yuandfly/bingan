@@ -75,15 +75,16 @@
             :linkId="item.linkId"
             :module="item.zkmc"
             ref="item"
+            v-show="item.show"
           >
             <template v-slot:del>
-              <div class="icon-del" @click="delItem(i)">x</div>
+              <span class="icon-del" @click="delItem(i)">x</span>
             </template>
           </ItemControl>
         </div>
       </template>
     </div>
-    <div class="submit-box" v-if="saveShow">
+    <div class="submit-box" v-if="saveShow || isUpdate">
       <el-button
         size="mini"
         type="primary"
@@ -155,7 +156,14 @@ export default {
       };
       getQualityList(params).then(
         (res) => {
-          this.qualityList = res.data ? Object.assign([], res.data) : [];
+          /* 增加show属性，用于删除做标记 */
+          const data = res.data
+            ? res.data.map((item) => {
+                item.show = true;
+                return item;
+              })
+            : [];
+          this.qualityList = Object.assign([], data);
           this.isUpdate = this.qualityList.length > 0 ? true : false;
           this.loading = false;
         },
@@ -167,7 +175,12 @@ export default {
 
     /* 增加项 */
     addItem() {
-      this.qualityList.push({ zkzbDOList: [], fs: null, linkId: null });
+      this.qualityList.push({
+        zkzbDOList: [],
+        fs: null,
+        linkId: null,
+        show: true,
+      });
     },
     /* 删除项 */
     delItem(index) {
@@ -177,34 +190,39 @@ export default {
         type: 'warning',
       })
         .then(() => {
-          this.qualityList.splice(index, 1);
+          this.qualityList[index].show = false;
         })
         .catch(() => {});
     },
     /* 保存 */
     submitHandler() {
-      const params = this.$refs.item.map((item, i) => {
-        const linkId = item.linkId;
-        const moduleName = item.moduleName;
-        let score = Number(item.itemScore);
-        const itemData = item.dealConditionItems();
-        itemData.forEach((row, i) => {
-          if (i === 0) {
-            row.fs = score;
-          } else {
-            row.fs = null;
-          }
-          row.lb = this.lb;
-          row.id = this.checkItmeId;
-        });
-        return {
-          linkId,
-          zkmc: moduleName,
-          lb: this.lb,
-          fs: this.totalScore,
-          zktjId: this.checkItmeId,
-          zkzbDO: itemData,
-        };
+      let params = [];
+      this.$refs.item.forEach((item, i) => {
+        /* 过滤点标记为删除的数据 */
+        if (this.qualityList[i].show) {
+          const linkId = item.linkId;
+          const moduleName = item.moduleName;
+          let score = Number(item.itemScore);
+          const itemData = item.dealConditionItems();
+          /* 模块的分数放到第一个评分项上 */
+          itemData.forEach((row, i) => {
+            if (i === 0) {
+              row.fs = score;
+            } else {
+              row.fs = null;
+            }
+            row.lb = this.lb;
+            row.id = this.checkItmeId;
+          });
+          params.push({
+            linkId,
+            zkmc: moduleName,
+            lb: this.lb,
+            fs: this.totalScore,
+            zktjId: this.checkItmeId,
+            zkzbDO: itemData,
+          });
+        }
       });
       addQuality(params).then(
         (res) => {
@@ -251,6 +269,7 @@ export default {
   text-indent: 2em;
   line-height: 20px;
   font-size: 15px;
+  color: #909399;
 }
 .left-input,
 .left-select {
@@ -290,6 +309,7 @@ export default {
 }
 .icon-del {
   text-align: center;
+  padding: 0 10px;
   cursor: pointer;
 }
 /deep/ .el-input__inner:focus {

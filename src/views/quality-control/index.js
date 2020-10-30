@@ -76,8 +76,6 @@ export default {
         }
     },
     created() {
-        this.itemScore = this.score
-        this.moduleName = this.module
         this.initData()
     },
     mounted() {
@@ -131,6 +129,8 @@ export default {
 
     /* 外部传入初始值 */
         initData() {
+            this.itemScore = this.score
+            this.moduleName = this.module
               this.conditionItems = this.qualityItem.map((item, index) => ({
                   index,
                   conditionField: item.cxx,
