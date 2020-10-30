@@ -27,5 +27,10 @@ export const addQuality = (param={}) => {
 
 /* 查询医师病案质控结果 */
 export const getDoctorResult = (param={}) => {
-  return post('/web/qualityController/doctorResult',param);
+  return post('/web/baza/doctorResult',param);
+};
+
+/* 查询医师病案质控结果的每条详情 */
+export const getDoctorDetailById = (id) => {
+  return post(`/web/baza/qualityControlDetail?id=${id}`,);
 };
